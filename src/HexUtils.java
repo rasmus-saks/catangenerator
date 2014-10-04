@@ -32,11 +32,29 @@ public class HexUtils {
      * @param loc   The location to look for
      * @return The hex which is located at the given location or {@code null} otherwise.
      */
-    private static Hex getHexAt(List<Hex> hexes, Location loc) {
+    public static Hex getHexAt(List<Hex> hexes, Location loc) {
         for (Hex h : hexes) {
             if (h.getLoc().equals(loc))
                 return h;
         }
         return null;
+    }
+
+    public static String getHexNumber(Hex hex,int width) {
+        //Find the number plate of the hex
+        String num = "  ";
+        if (hex != null && hex.getNumber() != null) {
+            num = StringUtils.frontpadder(String.valueOf(hex.getNumber().getValue()), 2);
+        }
+        return num;
+    }
+    public static String getHexType(Hex hex,int width) {
+        //Figure out what to display on the grid
+        String type = "  ";
+        if (hex != null) {
+            type = StringUtils.frontpadder(hex.getType().getDisplay(),2);
+            //s = h.getType().getDisplay() + loc.toString();
+        }
+        return type;
     }
 }

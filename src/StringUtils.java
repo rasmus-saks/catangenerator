@@ -49,4 +49,18 @@ public class StringUtils {
         }
         return ret;
     }
+
+    /**
+     *
+     * @param s the string that has to be padded from the front
+     * @param width the total character width to be returned
+     *              (has to always be more or equal to the length of s for desired effect)
+     * @return The original string (@code s) with the certain entered character width (@code width)
+     */
+    public static String frontpadder(String s, int width){
+        StringBuilder backstring = new StringBuilder();
+        backstring.append(repeat(" ",width-s.length()));
+        backstring.append(s);
+        return backstring.toString();
+    }
 }
