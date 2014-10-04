@@ -49,38 +49,38 @@ public class CatanGenerator {
      */
     public static void generateLocations() {
         SEA_LOCATIONS.clear();
-        SEA_LOCATIONS.add(new Location(2, 0));
         SEA_LOCATIONS.add(new Location(3, 0));
+        SEA_LOCATIONS.add(new Location(2, 0));
         SEA_LOCATIONS.add(new Location(4, 0));
-        SEA_LOCATIONS.add(new Location(5, 0));
 
+        SEA_LOCATIONS.add(new Location(0, 1));
         SEA_LOCATIONS.add(new Location(1, 1));
         SEA_LOCATIONS.add(new Location(5, 1));
+        SEA_LOCATIONS.add(new Location(6, 1));
 
-        SEA_LOCATIONS.add(new Location(1, 2));
+        SEA_LOCATIONS.add(new Location(0, 2));
         SEA_LOCATIONS.add(new Location(6, 2));
 
         SEA_LOCATIONS.add(new Location(0, 3));
         SEA_LOCATIONS.add(new Location(6, 3));
 
-        SEA_LOCATIONS.add(new Location(1, 4));
+        SEA_LOCATIONS.add(new Location(0, 4));
         SEA_LOCATIONS.add(new Location(6, 4));
 
         SEA_LOCATIONS.add(new Location(1, 5));
+        SEA_LOCATIONS.add(new Location(2, 5));
+        SEA_LOCATIONS.add(new Location(4, 5));
         SEA_LOCATIONS.add(new Location(5, 5));
 
-        SEA_LOCATIONS.add(new Location(2, 6));
         SEA_LOCATIONS.add(new Location(3, 6));
-        SEA_LOCATIONS.add(new Location(4, 6));
-        SEA_LOCATIONS.add(new Location(5, 6));
 
 
         LAND_LOCATIONS.clear();
-        int[] xs = new int[]{2, 2, 1, 2, 2};
+        int[] xs = new int[]{2, 1, 1, 1, 2};
         int[] ln = new int[]{3, 4, 5, 4, 3};
         for (int i = 0; i < xs.length; i++) {
-            for (int x = xs[i]; x < xs[i] + ln[i]; x++) {
-                LAND_LOCATIONS.add(new Location(x, i + 1));
+            for (int y = xs[i]; y < xs[i] + ln[i]; y++) {
+                LAND_LOCATIONS.add(new Location(i+1, y));
             }
         }
 
@@ -172,7 +172,8 @@ public class CatanGenerator {
         System.out.println("Number enne tähist näitab numbriketta väärtust ruudul.");
 
         //Display the generated hexes.
-        HexFormatter.displayHexes(hexes);
+
+        //HexFormatter.displayHexes(hexes); <--- broken
         BoardRenderer renderer = new TextBoardRenderer();
         renderer.renderexample();
     }

@@ -39,8 +39,26 @@ public class HexFormatter {
             return 0;
         }
     };
+
+    private static String getHexDisplayText(Hex h, int width) {
+        //Find the number plate of the hex
+        String num = "";
+        if(h != null && h.getNumber() != null)
+            num = String.valueOf(h.getNumber().getValue());
+
+        //Figure out what to display on the grid
+        String s = "";
+        if(h != null) {
+            s = num + h.getType().getDisplay();
+            //s = h.getType().getDisplay() + loc.toString();
+        }
+        //Print out the text centered.
+        return StringUtils.center(s, width);
+    }
     /**
      * Prints the given list of hexes and the corresponding numbers.
+     *
+     * BROKEN :(
      * @param hexes List of hexes to display
      */
     public static void displayHexes(List<Hex> hexes) {
@@ -50,38 +68,41 @@ public class HexFormatter {
 
         int lastY = -1;
         //Couple of constants
-        final int width = 5;
+        final int width = 15;
         String emptyHex = StringUtils.repeat(" ", width);
         String halfEmptyHex = StringUtils.repeat(" ", width/2);
 
-        for (Location loc : CatanGenerator.ALL_LOCATIONS) {
+        String[] text = new String[7];
+
+        for(int y = 0; y < 7; y++) {
+            for (int x = 0; x < 7; x ++) {
+                Hex h = getHexAt(hexes, new Location(x, y));
+                System.out.print(getHexDisplayText(h, width));
+            }
+            System.out.println();
+            for (int x = 0; x < 7; x += 2) {
+                Hex h = getHexAt(hexes, new Location(x, y+1));
+                System.out.print(getHexDisplayText(h, width));
+            }
+            System.out.println();
+        }
+
+        /*for (Location loc : CatanGenerator.ALL_LOCATIONS) {
             Hex h = getHexAt(hexes, loc);
 
             //If we started a new line
             if(loc.getY() != lastY) {
                 System.out.println(); //End the last line
-                if(loc.getY() % 2 == 1) {
+                if(loc.getX() % 2 == 1) {
                     System.out.print(halfEmptyHex); //Shift every other row to match how hex grid displays
                 }
             }
 
-            //Find the number plate of the hex
-            String num = "";
-            if(h != null && h.getNumber() != null)
-                num = String.valueOf(h.getNumber().getValue());
 
-            //FIgure out what to display on the grid
-            String s = "";
-            if(h != null) {
-                s = num + h.getType().getDisplay();
-                //s = h.getType().getDisplay() + loc.toString();
-            }
-            //Print out the text centered.
-            System.out.print(StringUtils.center(s, width));
 
 
             lastY = loc.getY();
-        }
+        }*/
     }
 
     /**
