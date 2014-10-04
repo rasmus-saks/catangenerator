@@ -173,6 +173,6 @@ public class CatanGenerator {
 
         //Display the generated hexes.
         BoardRenderer renderer = new TextBoardRenderer(hexes);
-        renderer.renderexample();
+        renderer.render();
     }
 }
