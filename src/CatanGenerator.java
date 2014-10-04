@@ -173,10 +173,7 @@ public class CatanGenerator {
 
         //Display the generated hexes.
         HexFormatter.displayHexes(hexes);
-<<<<<<< HEAD
         BoardRenderer renderer = new TextBoardRenderer();
         renderer.renderexample();
-=======
->>>>>>> aed4d2f2f67407cdee67561e6aee8cb8f381d1dd
     }
 }
