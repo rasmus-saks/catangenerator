@@ -172,8 +172,6 @@ public class CatanGenerator {
         System.out.println("Number enne tähist näitab numbriketta väärtust ruudul.");
 
         //Display the generated hexes.
-
-        //HexFormatter.displayHexes(hexes); <--- broken
         BoardRenderer renderer = new TextBoardRenderer();
         renderer.renderexample();
     }
