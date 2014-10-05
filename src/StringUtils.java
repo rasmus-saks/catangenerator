@@ -18,10 +18,6 @@ public class StringUtils {
      * @return The given string centered.
      */
     public static String center(String s, int size, String pad) {
-        if (pad == null)
-            throw new NullPointerException("pad cannot be null");
-        if (pad.length() <= 0)
-            throw new IllegalArgumentException("pad cannot be empty");
         if (s == null || size <= s.length())
             return s;
 
