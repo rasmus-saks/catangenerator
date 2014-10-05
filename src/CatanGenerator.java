@@ -117,7 +117,7 @@ public class CatanGenerator {
         System.out.println();
         System.out.println("Genereerin SUVALISE mänguvälja");
         System.out.println();
-        System.out.println("Siesta seeme mänguvälja genereerimiseks.");
+        System.out.println("Siseta seeme mänguvälja genereerimiseks.");
         System.out.println("Ühesugused seemned väljastavad ühesugused mänguväljad.");
         System.out.print("Seeme: ");
         String seed = sc.nextLine();
