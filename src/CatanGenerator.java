@@ -115,23 +115,17 @@ public class CatanGenerator {
         System.out.println("|     Autorid: Rasmus Saks ja Al William Tammsaar  |");
         System.out.println("----------------------------------------------------");
         System.out.println();
-        System.out.println("Milline mänguväli genereerida?");
-        System.out.print("Suvaline(S)/Aus(A):");
-
-        //Print out what kind of board we are going to generate
-        System.out.print("Genereerin ");
-        Generator gen = new RandomGenerator();
-        String type = "s";
-        //String type = sc.nextLine();
-        //Parse the input given by the user and select a generator
-        if (type.equals("s") || type.equals("suvaline")) {
-            System.out.print("SUVALISE");
-            gen = new RandomGenerator();
-
-        } else if (type.equals("a") || type.equals("aus")) {
-            System.out.print("AUSA");
+        System.out.println("Genereerin SUVALISE mänguvälja");
+        System.out.println();
+        System.out.println("Siesta seeme mänguvälja genereerimiseks.");
+        System.out.println("Ühesugused seemned väljastavad ühesugused mänguväljad.");
+        System.out.print("Seeme: ");
+        String seed = sc.nextLine();
+        long s = 0;
+        for (int i = 0; i < seed.length(); i++) {
+            s += (int) seed.charAt(i);
         }
-        System.out.println(" mänguvälja.");
+        Generator gen = new RandomGenerator(s);
         System.out.println();
 
         //Reset the defaults
@@ -169,7 +163,6 @@ public class CatanGenerator {
         }
 
         System.out.println();
-        System.out.println("Number enne tähist näitab numbriketta väärtust ruudul.");
 
         //Display the generated hexes.
         BoardRenderer renderer = new TextBoardRenderer(hexes);
