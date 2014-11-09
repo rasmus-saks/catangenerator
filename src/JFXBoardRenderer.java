@@ -54,21 +54,6 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
         bPane.setCenter(gPane);
         gPane.setAlignment(Pos.CENTER);
         gPane.setPrefSize(800, 650);
-        Polygon polygon = new Polygon();
-        polygon.getPoints().addAll(
-                25.0, 25.0,
-                60.0, 25.0,
-                75.0, 50.0,
-                60.0, 75.0,
-                25.0, 75.0,
-                10.0, 50.0);
-        polygon.setFill(Color.BLACK);
-
-        Polygon buffpoly = new Polygon();
-        buffpoly.getPoints().addAll(
-                00.0, 25.0,
-                60.0, 25.0);
-        buffpoly.setFill(Color.BLACK);
 
         int cx = 0;
         int cy = 0;
@@ -105,7 +90,6 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
                 (3/13.0) * width, height, //Left bottom
                 0.0, height/2.0); //Left middle
         Hex hex = HexUtils.getHexAt(hexes,location);
-        System.out.println(hex);
         polygon.setFill(hex.getType().getColor());
         polygon.setScaleX(1.8);
         polygon.setScaleY(1.8);
