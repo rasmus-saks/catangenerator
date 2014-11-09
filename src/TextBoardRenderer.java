@@ -1,9 +1,6 @@
 import java.util.List;
 
-/**
- * Created by Al William "Rezo" Tammsaar on 10/4/2014.
- */
-public class TextBoardRenderer extends BoardRenderer {
+public class TextBoardRenderer implements BoardRenderer {
     List<Hex> hexes;
 
     public TextBoardRenderer(List<Hex> hexes) {
