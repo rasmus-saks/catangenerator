@@ -36,6 +36,11 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
     public void start(Stage primaryStage) throws Exception {
         Group root = new Group();
         primaryStage.setScene(new Scene(root, 800, 650));
+        /**
+         * f - filler polygon. this shape buffers hexes between each other
+         * 0 - this polygon is an empty polygon that doesn't do anything
+         * 1 - this polygon is a hex, which is then rendered
+         */
         String[][] rowlist =
                        {{"f", "0", "f", "1", "f", "0", "f"},
                         {"0", "f", "1", "f", "1", "f", "0"},
@@ -105,10 +110,9 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
                 25.0, 80.0,
                 10.0, 50.0);
         Hex hex = HexUtils.getHexAt(hexes,location);
-        System.out.println(hex);
         polygon.setFill(hex.getType().getColor());
-        polygon.setScaleX(1.8);
-        polygon.setScaleY(1.8);
+        polygon.setScaleX(1.9);
+        polygon.setScaleY(1.9);
         return polygon;
     }
 
