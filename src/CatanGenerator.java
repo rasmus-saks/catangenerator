@@ -140,8 +140,10 @@ public class CatanGenerator {
         //Generate the hexes using the selected generator
         List<Hex> hexes = gen.generateHexes();
 
+        BoardRenderer renderer = new JFXBoardRenderer(hexes);
+
         //Display the generated hexes.
-        /*BoardRenderer renderer = new TextBoardRenderer(hexes);
-        renderer.render();*/
+        /*BoardRenderer renderer = new TextBoardRenderer(hexes);*/
+        renderer.render();
     }
 }
