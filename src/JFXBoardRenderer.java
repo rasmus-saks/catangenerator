@@ -36,6 +36,11 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
     public void start(Stage primaryStage) throws Exception {
         Group root = new Group();
         primaryStage.setScene(new Scene(root, 800, 650));
+        /**
+         * f - filler polygon. this shape buffers hexes between each other
+         * 0 - this polygon is an empty polygon that doesn't do anything
+         * 1 - this polygon is a hex, which is then rendered
+         */
         String[][] rowlist =
                        {{"f", "0", "f", "1", "f", "0", "f"},
                         {"0", "f", "1", "f", "1", "f", "0"},
@@ -91,11 +96,15 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
             cx = 0;
         }
 
+        /**
+         * This scales the hex to the necessary size.
+         */
+
         for ( Object obj :gPane.getChildren()){
             Polygon poly = (Polygon)obj;
             ScaleTransition st = new ScaleTransition(Duration.millis(300), poly);
-            st.setByX(0.8f);
-            st.setByY(0.8f);
+            st.setByX(0.85f);
+            st.setByY(0.85f);
             st.setCycleCount(1);
             st.setAutoReverse(true);
             st.play();
@@ -116,7 +125,6 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
         Hex hex = HexUtils.getHexAt(hexes,location);
         System.out.println(hex);
         polygon.setFill(hex.getType().getColor());
-        polygon.resize(0.1f,0.1f);
         return polygon;
     }
 
@@ -125,7 +133,6 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
         polygon.getPoints().addAll(
                 110.0, 25.0,
                 10.0, 25.0);
-        polygon.resize(0.1f,0.1f);
         return polygon;
     }
 
@@ -134,7 +141,6 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
         polygon.getPoints().addAll(
                 110.0, 25.0,
                 10.0, 25.0);
-        polygon.resize(0.1f,0.1f);
         return polygon;
     }
 }
