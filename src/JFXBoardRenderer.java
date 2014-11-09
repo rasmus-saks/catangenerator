@@ -91,15 +91,6 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
             cx = 0;
         }
 
-        for ( Object obj :gPane.getChildren()){
-            Polygon poly = (Polygon)obj;
-            ScaleTransition st = new ScaleTransition(Duration.millis(300), poly);
-            st.setByX(0.8f);
-            st.setByY(0.8f);
-            st.setCycleCount(1);
-            st.setAutoReverse(true);
-            st.play();
-        }
         gPane.autosize();
         primaryStage.show();
     }
@@ -116,7 +107,8 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
         Hex hex = HexUtils.getHexAt(hexes,location);
         System.out.println(hex);
         polygon.setFill(hex.getType().getColor());
-        polygon.resize(0.1f,0.1f);
+        polygon.setScaleX(1.8);
+        polygon.setScaleY(1.8);
         return polygon;
     }
 
