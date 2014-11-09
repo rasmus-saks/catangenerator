@@ -1,4 +1,3 @@
-import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -8,7 +7,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.util.List;
 
@@ -74,15 +72,17 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
 
         int cx = 0;
         int cy = 0;
+        int width = 45;
+        int height = 40;
         for (String[] row: rowlist){
             for (String element: row){
                 Polygon poly;
                 if (element.equals("f")){
-                    poly = getFiller();
+                    poly = getEmptyPoly(width, height);
                 } else if (element.equals("0")){
-                    poly = getEmptyPoly();
+                    poly = getEmptyPoly(width, height);
                 } else {
-                    poly = getHexPoly(cx,cy);
+                    poly = getHexPoly(cx,cy, width, height);
                 }
                 gPane.add(poly,cx,cy);
                 cx += 1;
@@ -94,16 +94,16 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
         gPane.autosize();
         primaryStage.show();
     }
-    public Polygon getHexPoly(int x, int y){
+    public Polygon getHexPoly(int x, int y, double width, double height){
         Location location = new Location(x, y);
         Polygon polygon = new Polygon();
         polygon.getPoints().addAll(
-                25.0, 20.0,
-                60.0, 20.0,
-                75.0, 50.0,
-                60.0, 80.0,
-                25.0, 80.0,
-                10.0, 50.0);
+                (3/13.0) * width, 0.0, //Left top
+                (10/13.0) * width, 0.0, //Right top
+                width, height/2.0, //Right middle
+                (10/13.0) * width, height, //Right bottom
+                (3/13.0) * width, height, //Left bottom
+                0.0, height/2.0); //Left middle
         Hex hex = HexUtils.getHexAt(hexes,location);
         System.out.println(hex);
         polygon.setFill(hex.getType().getColor());
@@ -112,20 +112,11 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
         return polygon;
     }
 
-    public Polygon getEmptyPoly(){
+    public Polygon getEmptyPoly(double width, double height){
         Polygon polygon = new Polygon();
         polygon.getPoints().addAll(
-                110.0, 25.0,
-                10.0, 25.0);
-        polygon.resize(0.1f,0.1f);
-        return polygon;
-    }
-
-    public Polygon getFiller(){
-        Polygon polygon = new Polygon();
-        polygon.getPoints().addAll(
-                110.0, 25.0,
-                10.0, 25.0);
+                (20.0/13) * width, (5/12.0) * height,
+                0.0, (5/12.0) * height);
         polygon.resize(0.1f,0.1f);
         return polygon;
     }
