@@ -40,7 +40,7 @@ public class CatanGenerator {
         for (int i = 0; i < 9; i++) {
             SEA_HEXES.add(new Hex(new Location(0, 0), HexType.SEA));
         }
-        
+
 
     }
 
@@ -50,44 +50,48 @@ public class CatanGenerator {
     public static void generateLocations() {
         SEA_LOCATIONS.clear();
         SEA_LOCATIONS.add(new Location(3, 0));
-        SEA_LOCATIONS.add(new Location(2, 0));
-        SEA_LOCATIONS.add(new Location(4, 0));
 
-        SEA_LOCATIONS.add(new Location(0, 1));
-        SEA_LOCATIONS.add(new Location(1, 1));
-        SEA_LOCATIONS.add(new Location(5, 1));
-        SEA_LOCATIONS.add(new Location(6, 1));
+        SEA_LOCATIONS.add(new Location(2, 1));
+        SEA_LOCATIONS.add(new Location(4, 1));
 
-        SEA_LOCATIONS.add(new Location(0, 2));
-        SEA_LOCATIONS.add(new Location(6, 2));
+        SEA_LOCATIONS.add(new Location(1, 2));
+        SEA_LOCATIONS.add(new Location(5, 2));
 
         SEA_LOCATIONS.add(new Location(0, 3));
         SEA_LOCATIONS.add(new Location(6, 3));
 
-        SEA_LOCATIONS.add(new Location(0, 4));
-        SEA_LOCATIONS.add(new Location(6, 4));
+        SEA_LOCATIONS.add(new Location(0, 5));
+        SEA_LOCATIONS.add(new Location(6, 5));
 
-        SEA_LOCATIONS.add(new Location(1, 5));
-        SEA_LOCATIONS.add(new Location(2, 5));
-        SEA_LOCATIONS.add(new Location(4, 5));
-        SEA_LOCATIONS.add(new Location(5, 5));
+        SEA_LOCATIONS.add(new Location(0, 7));
+        SEA_LOCATIONS.add(new Location(6, 7));
 
-        SEA_LOCATIONS.add(new Location(3, 6));
+        SEA_LOCATIONS.add(new Location(0, 9));
+        SEA_LOCATIONS.add(new Location(6, 9));
+
+        SEA_LOCATIONS.add(new Location(1, 10));
+        SEA_LOCATIONS.add(new Location(5, 10));
+
+        SEA_LOCATIONS.add(new Location(2, 11));
+        SEA_LOCATIONS.add(new Location(4, 11));
+
+        SEA_LOCATIONS.add(new Location(3, 12));
 
 
         LAND_LOCATIONS.clear();
-        int[] xs = new int[]{2, 1, 1, 1, 2};
-        int[] ln = new int[]{3, 4, 5, 4, 3};
-        for (int i = 0; i < xs.length; i++) {
-            for (int y = xs[i]; y < xs[i] + ln[i]; y++) {
-                LAND_LOCATIONS.add(new Location(i+1, y));
+        int[] width = {1, 2, 2, 2, 2, 2, 2, 2, 1};
+        for (int y = 2; y < 11; y++) {
+            for (int x = 3 - width[y - 2]; x < 3 + width[y - 2] + 1; x++) {
+                if (x % 2 == y % 2) continue;
+                LAND_LOCATIONS.add(new Location(x, y));
             }
         }
 
         //All locations
         ALL_LOCATIONS.clear();
         for (int x = 0; x < 7; x++) {
-            for (int y = 0; y < 7; y++) {
+            for (int y = 0; y < 12; y++) {
+                if(x % 2 == y % 2) continue;
                 ALL_LOCATIONS.add(new Location(x, y));
             }
         }
@@ -135,37 +139,9 @@ public class CatanGenerator {
 
         //Generate the hexes using the selected generator
         List<Hex> hexes = gen.generateHexes();
-        System.out.println();
-
-        //Print out the legend
-        System.out.println("Legend:");
-        String last = "";
-        int cols = 3;
-        int colw = 25;
-        for (int i = 0; i < HexType.values().length; i++) {
-            HexType t = HexType.values()[i];
-            if(i % cols == 0) {
-                last = "";
-            }
-            //If we're not at the start of the line,
-            //print spaces to align the text we're going to write.
-            if (i % cols != 0) {
-                System.out.print(StringUtils.repeat(" ", colw - last.length()));
-            }
-            //Get the text to display
-            String cur = t.getDisplay() + StringUtils.repeat(" ", 2 - t.getDisplay().length()) + ": " + t.getName();
-            last = cur;
-            System.out.print(cur);
-            //If we're at the last column to print, end the line.
-            if (i % cols == (cols - 1)) {
-                System.out.println();
-            }
-        }
-
-        System.out.println();
 
         //Display the generated hexes.
-        BoardRenderer renderer = new TextBoardRenderer(hexes);
-        renderer.render();
+        /*BoardRenderer renderer = new TextBoardRenderer(hexes);
+        renderer.render();*/
     }
 }
