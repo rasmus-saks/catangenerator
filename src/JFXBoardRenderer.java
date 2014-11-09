@@ -37,7 +37,7 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
         Group root = new Group();
         primaryStage.setScene(new Scene(root, 800, 650));
         String[][] rowlist =
-                {{"f", "0", "f", "1", "f", "0", "f"},
+                       {{"f", "0", "f", "1", "f", "0", "f"},
                         {"0", "f", "1", "f", "1", "f", "0"},
                         {"f", "1", "f", "1", "f", "1", "f"},
                         {"1", "f", "1", "f", "1", "f", "1"},
@@ -104,6 +104,7 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
         primaryStage.show();
     }
     public Polygon getHexPoly(int x, int y){
+        Location location = new Location(x, y);
         Polygon polygon = new Polygon();
         polygon.getPoints().addAll(
                 25.0, 20.0,
@@ -112,7 +113,9 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
                 60.0, 80.0,
                 25.0, 80.0,
                 10.0, 50.0);
-        polygon.setFill(Color.BLACK);
+        Hex hex = HexUtils.getHexAt(hexes,location);
+        System.out.println(hex);
+        polygon.setFill(hex.getType().getColor());
         polygon.resize(0.1f,0.1f);
         return polygon;
     }

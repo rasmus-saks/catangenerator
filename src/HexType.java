@@ -1,27 +1,34 @@
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+
 /**
  * An enum containing all the types of hexes there are.
  */
 public enum HexType {
-    WOOD("P", "Puit"),
-    CROPS("V", "Vili"),
-    SHEEP("L", "Lammas"),
-    ORE("M", "Maak"),
-    CLAY("S", "Savi"),
-    DESERT("K", "Kõrb"),
-    SEA("O", "Ookean"),
-    TRADE_WOOD("P2", "2:1 Puit"),
-    TRADE_CROPS("V2", "2:1 Vili"),
-    TRADE_SHEEP("L2", "2:1 Lammas"),
-    TRADE_ORE("M2", "2:1 Maak"),
-    TRADE_CLAY("S2", "2:1 Savi"),
-    TRADE_ANY("?3", "3:1 Kõik");
+    WOOD("P", "Puit", Color.BROWN),
+    CROPS("V", "Vili", Color.YELLOW),
+    SHEEP("L", "Lammas", Color.GREEN),
+    ORE("M", "Maak", Color.GRAY),
+    CLAY("S", "Savi", Color.ORANGE),
+    DESERT("K", "Kõrb", Color.BEIGE),
+    SEA("O", "Ookean", Color.BLUE),
+    TRADE_WOOD("P2", "2:1 Puit", Color.BROWN.desaturate().desaturate()),
+    TRADE_CROPS("V2", "2:1 Vili", Color.YELLOW.desaturate().desaturate()),
+    TRADE_SHEEP("L2", "2:1 Lammas", Color.GREEN.desaturate().desaturate()),
+    TRADE_ORE("M2", "2:1 Maak", Color.GRAY.desaturate().desaturate()),
+    TRADE_CLAY("S2", "2:1 Savi", Color.ORANGE.desaturate().desaturate()),
+    TRADE_ANY("?3", "3:1 Kõik", Color.ALICEBLUE.saturate().darker());
     private String display;
     private String name;
+    private Paint color;
 
-    HexType(String display, String name) {
+    HexType(String display, String name, Paint color) {
         this.display = display;
         this.name = name;
+        this.color = color;
     }
+
+    public Paint getColor() { return color;}
 
     /**
      * Gets the short name of this HexType, suitable for displaying in a text grid.
