@@ -2,13 +2,9 @@ import java.util.List;
 
 public class TextBoardRenderer implements BoardRenderer {
     List<Hex> hexes;
-
-    public TextBoardRenderer(List<Hex> hexes) {
-        this.hexes = hexes;
-    }
-
     @Override
-    public void render() {
+    public void render(List<Hex> hexes) {
+        this.hexes = hexes;
         //Print out the legend
         System.out.println();
         System.out.println("Legend:");
@@ -121,6 +117,11 @@ public class TextBoardRenderer implements BoardRenderer {
                 HexUtils.getHexType(HexUtils.getHexAt(hexes, new Location(2, 5)), 2),
                 HexUtils.getHexType(HexUtils.getHexAt(hexes, new Location(4, 5)), 2),
                 HexUtils.getHexType(HexUtils.getHexAt(hexes, new Location(3, 6)), 2));
+    }
+
+    @Override
+    public void regenerated(List<Hex> hexes) {
+
     }
 
 }

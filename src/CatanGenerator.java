@@ -1,12 +1,13 @@
 import java.util.*;
 
 public class CatanGenerator {
-    public static List<Hex> LAND_HEXES = new ArrayList<Hex>();
-    public static List<Hex> SEA_HEXES = new ArrayList<Hex>();
-    public static List<Number> ALL_NUMBERS = new ArrayList<Number>();
-    public static List<Location> SEA_LOCATIONS = new ArrayList<Location>();
-    public static List<Location> LAND_LOCATIONS = new ArrayList<Location>();
-    public static List<Location> ALL_LOCATIONS = new ArrayList<Location>();
+    public static List<Hex> LAND_HEXES = new ArrayList<>();
+    public static List<Hex> SEA_HEXES = new ArrayList<>();
+    public static List<Number> ALL_NUMBERS = new ArrayList<>();
+    public static List<Location> SEA_LOCATIONS = new ArrayList<>();
+    public static List<Location> LAND_LOCATIONS = new ArrayList<>();
+    public static List<Location> ALL_LOCATIONS = new ArrayList<>();
+    public static BoardRenderer renderer = new JFXBoardRenderer();
 
     /**
      * Regenerates the lists {@link #SEA_HEXES} and {@link #LAND_HEXES}.
@@ -91,7 +92,7 @@ public class CatanGenerator {
         ALL_LOCATIONS.clear();
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 12; y++) {
-                if(x % 2 == y % 2) continue;
+                if (x % 2 == y % 2) continue;
                 ALL_LOCATIONS.add(new Location(x, y));
             }
         }
@@ -111,39 +112,30 @@ public class CatanGenerator {
         ALL_NUMBERS.add(new Number(new Location(0, 0), 12));
     }
 
-    public static void main(String[] args) {
+    public static List<Hex> regenerate(long seed) {
+        generateDefaultHexes();
+        generateDefaultNumbers();
+        generateLocations();
 
-        Scanner sc = new Scanner(System.in);
+        Generator gen = new RandomGenerator(seed);
+        List<Hex> hexes = gen.generateHexes();
+        if(renderer != null)
+            renderer.regenerated(hexes);
+        return hexes;
+    }
+
+    public static void main(String[] args) {
         System.out.println("----------------------------------------------------");
         System.out.println("|       Katani Asustajate mänguvälja generaator    |");
         System.out.println("|     Autorid: Rasmus Saks ja Al William Tammsaar  |");
         System.out.println("----------------------------------------------------");
         System.out.println();
-        System.out.println("Genereerin SUVALISE mänguvälja");
-        System.out.println();
-        System.out.println("Sisesta seeme mänguvälja genereerimiseks.");
-        System.out.println("Ühesugused seemned väljastavad ühesugused mänguväljad.");
-        System.out.print("Seeme: ");
-        String seed = sc.nextLine();
-        long s = 0;
-        for (int i = 0; i < seed.length(); i++) {
-            s += (int) seed.charAt(i);
-        }
-        Generator gen = new RandomGenerator(s);
-        System.out.println();
-
-        //Reset the defaults
-        generateDefaultHexes();
-        generateDefaultNumbers();
-        generateLocations();
 
         //Generate the hexes using the selected generator
-        List<Hex> hexes = gen.generateHexes();
-
-        BoardRenderer renderer = new JFXBoardRenderer(hexes);
+        List<Hex> hexes = regenerate(System.currentTimeMillis());
 
         //Display the generated hexes.
         /*BoardRenderer renderer = new TextBoardRenderer(hexes);*/
-        renderer.render();
+        renderer.render(hexes);
     }
 }
