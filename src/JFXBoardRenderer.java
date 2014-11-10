@@ -173,7 +173,9 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
         text.setStroke(Color.BLACK);
         text.setStrokeWidth(0.7);
         //text.setStrokeType(StrokeType.OUTSIDE);
-        text.setStyle("-fx-font-size: 13pt; -fx-font-weight: bold");
+        text.setStyle("-fx-font-size: 12pt; -fx-font-weight: bold");
+        text.setScaleX(1.2);
+        text.setScaleY(1.2);
         text.setTextAlignment(TextAlignment.CENTER);
 
         stackPane.getChildren().addAll(polygon, text);
