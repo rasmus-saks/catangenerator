@@ -65,8 +65,8 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
         Group root = new Group();
         Scene scene = new Scene(root, 1200, 800);
         primaryStage.setTitle("Katani mänguvälja generaator");
-        primaryStage.setMinWidth(1150);
-        primaryStage.setMinHeight(850);
+        primaryStage.setMinWidth(1000);
+        primaryStage.setMinHeight(700);
 
         primaryStage.setWidth(primaryStage.getMinWidth());
         primaryStage.setHeight(primaryStage.getMinHeight());
@@ -129,8 +129,8 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
 
         int cx = 0;
         int cy = 0;
-        int width = 60;
-        int height = 55;
+        int width = 50;
+        int height = 45;
         for (String[] row: rowlist){
             for (String element: row){
                 Node poly;
@@ -171,9 +171,9 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
             text.setText(text.getText() + "\n" + hex.getNumber().getValue());
         text.setFill(Color.WHITE);
         text.setStroke(Color.BLACK);
-        text.setStrokeWidth(0.7);
+        text.setStrokeWidth(0.8);
         //text.setStrokeType(StrokeType.OUTSIDE);
-        text.setStyle("-fx-font-size: 13pt; -fx-font-weight: bold");
+        text.setStyle("-fx-font-size: 15px; -fx-font-weight: bold");
         text.setTextAlignment(TextAlignment.CENTER);
 
         stackPane.getChildren().addAll(polygon, text);

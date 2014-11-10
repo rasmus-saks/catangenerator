@@ -12,12 +12,12 @@ public enum HexType {
     CLAY("S", "Savi", Color.ORANGE),
     DESERT("K", "Kõrb", Color.BEIGE),
     SEA("O", "Ookean", Color.BLUE),
-    TRADE_WOOD("P2", "2:1 Puit",Color.BLUE.darker().desaturate()),
-    TRADE_CROPS("V2", "2:1 Vili", Color.BLUE.darker().desaturate()),
-    TRADE_SHEEP("L2", "2:1 Lammas",Color.BLUE.darker().desaturate()),
-    TRADE_ORE("M2", "2:1 Maak",Color.BLUE.darker().desaturate()),
-    TRADE_CLAY("S2", "2:1 Savi",Color.BLUE.darker().desaturate()),
-    TRADE_ANY("?3", "3:1 Kõik",Color.BLUE.darker().desaturate());
+    TRADE_WOOD("P2", "2:1\nPuit",Color.BLUE.darker().desaturate()),
+    TRADE_CROPS("V2", "2:1\nVili", Color.BLUE.darker().desaturate()),
+    TRADE_SHEEP("L2", "2:1\nLammas",Color.BLUE.darker().desaturate()),
+    TRADE_ORE("M2", "2:1\nMaak",Color.BLUE.darker().desaturate()),
+    TRADE_CLAY("S2", "2:1\nSavi",Color.BLUE.darker().desaturate()),
+    TRADE_ANY("?3", "3:1\nKõik",Color.BLUE.darker().desaturate());
     private String display;
     private String name;
     private Paint color;
