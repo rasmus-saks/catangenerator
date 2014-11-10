@@ -123,6 +123,7 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
                 new Label("Sama seeme genereerib samasuguse mänguvälja"),
                 new Label("Jäta tühjaks, et genereerida suvaline mänguväli"),
                 regenButton,
+                new Label(),
                 new Label("Salvesta mänguväli pildina:"),
                 saveButton);
         borderPane.setRight(leftPane);
