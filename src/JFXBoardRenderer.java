@@ -63,10 +63,13 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
     public void start(Stage primaryStage) throws Exception {
         CatanGenerator.renderer = this;
         Group root = new Group();
-        Scene scene = new Scene(root, 1200, 900);
+        Scene scene = new Scene(root, 1200, 800);
         primaryStage.setTitle("Katani mänguvälja generaator");
         primaryStage.setMinWidth(1150);
-        primaryStage.setMinHeight(900);
+        primaryStage.setMinHeight(850);
+
+        primaryStage.setWidth(primaryStage.getMinWidth());
+        primaryStage.setHeight(primaryStage.getMinHeight());
 
         primaryStage.setScene(scene);
 
@@ -126,8 +129,8 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
 
         int cx = 0;
         int cy = 0;
-        int width = 65;
-        int height = 60;
+        int width = 60;
+        int height = 55;
         for (String[] row: rowlist){
             for (String element: row){
                 Node poly;
