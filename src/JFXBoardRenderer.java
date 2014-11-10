@@ -1,22 +1,27 @@
 import javafx.application.Application;
-import javafx.beans.property.SimpleDoubleProperty;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.StrokeType;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class JFXBoardRenderer extends Application implements BoardRenderer{
@@ -84,19 +89,42 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
 
         VBox vbox = new VBox(5);
         vbox.setPadding(new Insets(5));
+
         BorderPane leftPane = new BorderPane(vbox);
         leftPane.setBottom(new Label("Rasmus Saks ja Al William Tammsaar 2014"));
+
         TextField seedField = new TextField();
         Button regenButton = new Button("Genereeri");
+
         Label title = new Label("Katani generaator");
         title.setStyle("-fx-font-weight: bold; -fx-font-size: 18pt");
+
+        Button saveButton = new Button("Salvesta");
+        saveButton.setOnAction(e -> {
+            FileChooser chooser = new FileChooser();
+            chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG", "*.png"));
+            File file = chooser.showSaveDialog(primaryStage);
+            if (file == null) {
+                return;
+            }
+            WritableImage img = centerPane.snapshot(new SnapshotParameters(), null);
+            BufferedImage bImg = SwingFXUtils.fromFXImage(img, null);
+            try {
+                ImageIO.write(bImg, "png", file);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
+        });
         vbox.getChildren().addAll(
                 title,
                 new Label("Seeme"),
                 seedField,
                 new Label("Sama seeme genereerib samasuguse mänguvälja"),
                 new Label("Jäta tühjaks, et genereerida suvaline mänguväli"),
-                regenButton);
+                regenButton,
+                new Label("Salvesta mänguväli pildina:"),
+                saveButton);
         borderPane.setRight(leftPane);
 
         regenButton.setOnAction(e -> {
@@ -134,12 +162,16 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
         for (String[] row: rowlist){
             for (String element: row){
                 Node poly;
-                if (element.equals("f")){
-                    poly = getEmptyPoly(width, height);
-                } else if (element.equals("0")){
-                    poly = getEmptyPoly(width, height);
-                } else {
-                    poly = getHexPoly(cx,cy, width, height);
+                switch (element) {
+                    case "f":
+                        poly = getEmptyPoly(width, height);
+                        break;
+                    case "0":
+                        poly = getEmptyPoly(width, height);
+                        break;
+                    default:
+                        poly = getHexPoly(cx, cy, width, height);
+                        break;
                 }
                 gPane.add(poly,cx,cy);
                 cx += 1;
