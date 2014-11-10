@@ -1,9 +1,7 @@
-import java.util.List;
-
 public class TextBoardRenderer implements BoardRenderer {
-    List<Hex> hexes;
+    GameBoard hexes;
     @Override
-    public void render(List<Hex> hexes) {
+    public void render(GameBoard hexes) {
         this.hexes = hexes;
         //Print out the legend
         System.out.println();
@@ -120,7 +118,7 @@ public class TextBoardRenderer implements BoardRenderer {
     }
 
     @Override
-    public void regenerated(List<Hex> hexes) {
+    public void regenerated(GameBoard hexes) {
 
     }
 

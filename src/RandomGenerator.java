@@ -15,9 +15,10 @@ public class RandomGenerator extends Generator {
     }
 
     @Override
-    public List<Hex> generateHexes() {
-        List<Hex> hexes = new ArrayList<Hex>(CatanGenerator.LAND_HEXES);
-        List<Number> nums = new ArrayList<Number>(CatanGenerator.ALL_NUMBERS);
+    public GameBoard generateGameBoard() {
+        GameBoard board = new GameBoard(new ArrayList<>(CatanGenerator.LAND_HEXES));
+        List<Hex> hexes = board.getHexes();
+        List<Number> nums = new ArrayList<>(CatanGenerator.ALL_NUMBERS);
         Collections.shuffle(CatanGenerator.LAND_LOCATIONS, random);
         Collections.shuffle(nums, random);
         int j = 0;
@@ -34,7 +35,7 @@ public class RandomGenerator extends Generator {
             hex.setLoc(CatanGenerator.SEA_LOCATIONS.get(i));
             hexes.add(hex);
         }
-        return hexes;
+        return board;
     }
 
 }

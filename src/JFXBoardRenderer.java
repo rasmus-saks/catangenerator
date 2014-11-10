@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
@@ -22,17 +23,17 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
-public class JFXBoardRenderer extends Application implements BoardRenderer{
+public class JFXBoardRenderer extends Application implements BoardRenderer {
 
-    public static List<Hex> hexes;
+    public static GameBoard gameBoard;
     /**
      * f - filler polygon. this shape buffers hexes between each other
      * 0 - this polygon is an empty polygon that doesn't do anything
      * 1 - this polygon is a hex, which is then rendered
      */
-    private final String[][] rowlist = new String[][]{{"f", "0", "f", "1", "f", "0", "f"},
+    private final String[][] rowlist = new String[][]{
+            {"f", "0", "f", "1", "f", "0", "f"},
             {"0", "f", "1", "f", "1", "f", "0"},
             {"f", "1", "f", "1", "f", "1", "f"},
             {"1", "f", "1", "f", "1", "f", "1"},
@@ -52,15 +53,15 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
     }
 
     @Override
-    public void render(List<Hex> hexes) {
-        JFXBoardRenderer.hexes = hexes;
+    public void render(GameBoard board) {
+        JFXBoardRenderer.gameBoard = board;
         launch();
     }
 
     @Override
-    public void regenerated(List<Hex> hexes) {
-        JFXBoardRenderer.hexes = hexes;
-        if(borderPane != null)
+    public void regenerated(GameBoard board) {
+        JFXBoardRenderer.gameBoard = board;
+        if (borderPane != null)
             borderPane.setCenter(getCenterPane());
     }
 
@@ -116,6 +117,38 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
             }
 
         });
+
+        Button importBtn = new Button("Impordi");
+        Button exportBtn = new Button("Ekspordi");
+
+        exportBtn.setOnAction(e -> {
+            FileChooser chooser = new FileChooser();
+            chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Catan", "*.ctn"));
+            File file = chooser.showSaveDialog(primaryStage);
+            if (file == null) {
+                return;
+            }
+            try {
+                CatanGenerator.saveBoard(file);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        importBtn.setOnAction(e -> {
+            FileChooser chooser = new FileChooser();
+            chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Catan", "*.ctn"));
+            File file = chooser.showOpenDialog(primaryStage);
+            if (file == null) {
+                return;
+            }
+            try {
+                GameBoard board = CatanGenerator.loadBoard(file);
+                regenerated(board);
+            } catch (IOException | ClassNotFoundException e1) {
+                e1.printStackTrace();
+            }
+        });
         vbox.getChildren().addAll(
                 title,
                 new Label("Seeme"),
@@ -123,14 +156,17 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
                 new Label("Sama seeme genereerib samasuguse mänguvälja"),
                 new Label("Jäta tühjaks, et genereerida suvaline mänguväli"),
                 regenButton,
-                new Label(),
+                new Separator(),
                 new Label("Salvesta mänguväli pildina:"),
-                saveButton);
+                saveButton,
+                new Separator(),
+                new Label("Ekspordi/Impordi"),
+                new HBox(10, exportBtn, importBtn));
         borderPane.setRight(leftPane);
 
         regenButton.setOnAction(e -> {
             String seed = seedField.getText();
-            if(seed.isEmpty()) {
+            if (seed.isEmpty()) {
                 CatanGenerator.regenerate(System.currentTimeMillis());
             } else {
                 long s = 0;
@@ -160,8 +196,8 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
         int cy = 0;
         int width = 50;
         int height = 45;
-        for (String[] row: rowlist){
-            for (String element: row){
+        for (String[] row : rowlist) {
+            for (String element : row) {
                 Node poly;
                 switch (element) {
                     case "f":
@@ -174,7 +210,7 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
                         poly = getHexPoly(cx, cy, width, height);
                         break;
                 }
-                gPane.add(poly,cx,cy);
+                gPane.add(poly, cx, cy);
                 cx += 1;
             }
             cy += 1;
@@ -184,23 +220,24 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
         gPane.autosize();
         return gPane;
     }
-    public Node getHexPoly(int x, int y, double width, double height){
+
+    public Node getHexPoly(int x, int y, double width, double height) {
         StackPane stackPane = new StackPane();
         Location location = new Location(x, y);
         Polygon polygon = new Polygon();
         polygon.getPoints().addAll(
-                (3/13.0) * width, 0.0, //Left top
-                (10/13.0) * width, 0.0, //Right top
-                width, height/2.0, //Right middle
-                (10/13.0) * width, height, //Right bottom
-                (3/13.0) * width, height, //Left bottom
-                0.0, height/2.0); //Left middle
-        Hex hex = HexUtils.getHexAt(hexes,location);
+                (3 / 13.0) * width, 0.0, //Left top
+                (10 / 13.0) * width, 0.0, //Right top
+                width, height / 2.0, //Right middle
+                (10 / 13.0) * width, height, //Right bottom
+                (3 / 13.0) * width, height, //Left bottom
+                0.0, height / 2.0); //Left middle
+        Hex hex = HexUtils.getHexAt(gameBoard, location);
         polygon.setFill(hex.getType().getColor());
         polygon.setScaleX(1.9);
         polygon.setScaleY(1.9);
         Text text = new Text(hex.getType().getName());
-        if(hex.getNumber() != null)
+        if (hex.getNumber() != null)
             text.setText(text.getText() + "\n" + hex.getNumber().getValue());
         text.setFill(Color.WHITE);
         text.setStroke(Color.BLACK);
@@ -213,12 +250,12 @@ public class JFXBoardRenderer extends Application implements BoardRenderer{
         return stackPane;
     }
 
-    public Node getEmptyPoly(double width, double height){
+    public Node getEmptyPoly(double width, double height) {
         Polygon polygon = new Polygon();
         polygon.getPoints().addAll(
-                (20.0/13) * width, (5/12.0) * height,
-                0.0, (5/12.0) * height);
-        polygon.resize(0.1f,0.1f);
+                (20.0 / 13) * width, (5 / 12.0) * height,
+                0.0, (5 / 12.0) * height);
+        polygon.resize(0.1f, 0.1f);
         return polygon;
     }
 }

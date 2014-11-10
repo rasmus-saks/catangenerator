@@ -2,30 +2,21 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.List;
 
-public class Number extends Locatable implements Serializable{
-    private int value;
+public class GameBoard implements Serializable {
+    private List<Hex> hexes;
 
-    public int getValue() {
-        return value;
+    public GameBoard(List<Hex> hexes) {
+        this.hexes = hexes;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public List<Hex> getHexes() {
+        return hexes;
     }
 
-    public Number(Location loc, int value) {
-        super(loc);
-        this.value = value;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Number{" +
-                "loc=" + getLoc() +
-                ", value=" + value +
-                '}';
+    public void setHexes(List<Hex> hexes) {
+        this.hexes = hexes;
     }
 
     private void writeObject(ObjectOutputStream stream) throws IOException {
@@ -40,15 +31,14 @@ public class Number extends Locatable implements Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Number number = (Number) o;
+        GameBoard gameBoard = (GameBoard) o;
 
-        if (value != number.value) return false;
+        return !(hexes != null ? !hexes.equals(gameBoard.hexes) : gameBoard.hexes != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        return value;
+        return hexes != null ? hexes.hashCode() : 0;
     }
 }

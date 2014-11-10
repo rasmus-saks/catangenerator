@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 
 public class CatanGenerator {
@@ -8,6 +9,7 @@ public class CatanGenerator {
     public static List<Location> LAND_LOCATIONS = new ArrayList<>();
     public static List<Location> ALL_LOCATIONS = new ArrayList<>();
     public static BoardRenderer renderer = new JFXBoardRenderer();
+    private static GameBoard gameBoard;
 
     /**
      * Regenerates the lists {@link #SEA_HEXES} and {@link #LAND_HEXES}.
@@ -112,19 +114,33 @@ public class CatanGenerator {
         ALL_NUMBERS.add(new Number(new Location(0, 0), 12));
     }
 
-    public static List<Hex> regenerate(long seed) {
+    public static GameBoard regenerate(long seed) {
         generateDefaultHexes();
         generateDefaultNumbers();
         generateLocations();
 
         Generator gen = new RandomGenerator(seed);
-        List<Hex> hexes = gen.generateHexes();
+        gameBoard = gen.generateGameBoard();
         if(renderer != null)
-            renderer.regenerated(hexes);
-        return hexes;
+            renderer.regenerated(gameBoard);
+        return gameBoard;
     }
 
-    public static void main(String[] args) {
+    public static void saveBoard(File file) throws IOException {
+        try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file))) {
+            os.writeObject(gameBoard);
+            os.close();
+        }
+    }
+
+    public static GameBoard loadBoard(File file) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream os = new ObjectInputStream(new FileInputStream(file))) {
+            gameBoard = (GameBoard) os.readObject();
+            return gameBoard;
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
         System.out.println("----------------------------------------------------");
         System.out.println("|       Katani Asustajate mänguvälja generaator    |");
         System.out.println("|     Autorid: Rasmus Saks ja Al William Tammsaar  |");
@@ -132,10 +148,9 @@ public class CatanGenerator {
         System.out.println();
 
         //Generate the hexes using the selected generator
-        List<Hex> hexes = regenerate(System.currentTimeMillis());
-
+        GameBoard board = regenerate(System.currentTimeMillis());
         //Display the generated hexes.
         /*BoardRenderer renderer = new TextBoardRenderer(hexes);*/
-        renderer.render(hexes);
+        renderer.render(board);
     }
 }
