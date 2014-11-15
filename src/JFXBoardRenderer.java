@@ -149,9 +149,12 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
                 e1.printStackTrace();
             }
         });
+        Label errorLabel = new Label();
+        errorLabel.setTextFill(Color.RED);
         vbox.getChildren().addAll(
                 title,
-                new Label("Seeme"),
+                new HBox(new Label("Seeme "),
+                errorLabel),
                 seedField,
                 new Label("Sama seeme genereerib samasuguse mänguvälja"),
                 new Label("Jäta tühjaks, et genereerida suvaline mänguväli"),
@@ -169,11 +172,13 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
             if (seed.isEmpty()) {
                 CatanGenerator.regenerate(System.currentTimeMillis());
             } else {
-                long s = 0;
-                for (int i = 0; i < seed.length(); i++) {
-                    s += (int) seed.charAt(i);
+                try {
+                    long s = Long.parseLong(seedField.getText());
+                    CatanGenerator.regenerate(s);
+                    errorLabel.setText("");
+                } catch (NumberFormatException ex) {
+                    errorLabel.setText("Palun sisesta arv!");
                 }
-                CatanGenerator.regenerate(s);
             }
         });
         primaryStage.show();
