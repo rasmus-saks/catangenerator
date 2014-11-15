@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -99,6 +100,12 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
 
         Label title = new Label("Katani generaator");
         title.setStyle("-fx-font-weight: bold; -fx-font-size: 18pt");
+
+        seedField.setOnKeyPressed(e -> {
+            if(e.getCode().equals(KeyCode.ENTER)) {
+                regenButton.fire();
+            }
+        });
 
         Button saveButton = new Button("Salvesta");
         saveButton.setOnAction(e -> {
