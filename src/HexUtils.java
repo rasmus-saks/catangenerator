@@ -38,20 +38,31 @@ public class HexUtils {
         return null;
     }
 
+    /**
+     * Currently unused.
+     * Gets the number plate of the hex with front padding.
+     * @param hex the hex which contains the number information
+     * @param width if the number is not long enough its padded with spaces to be the length of this variable
+     * @return the numberplate string with frontpadding.
+     */
     public static String getHexNumber(Hex hex,int width) {
-        //Find the number plate of the hex
         String num = "  ";
         if (hex != null && hex.getNumber() != null) {
-            num = StringUtils.frontpadder(String.valueOf(hex.getNumber().getValue()), 2);
+            num = StringUtils.frontpadder(String.valueOf(hex.getNumber().getValue()), width);
         }
         return num;
     }
+    /**
+     * Currently unused.
+     * Gets the type of the hex with front padding.
+     * @param hex the hex which contains the type information
+     * @param width if the type acronym is not long enough its padded with spaces to be the length of this variable
+     * @return the type string with frontpadding.
+     */
     public static String getHexType(Hex hex,int width) {
-        //Figure out what to display on the grid
         String type = "  ";
         if (hex != null) {
-            type = StringUtils.frontpadder(hex.getType().getDisplay(),2);
-            //s = h.getType().getDisplay() + loc.toString();
+            type = StringUtils.frontpadder(hex.getType().getDisplay(),width);
         }
         return type;
     }

@@ -29,8 +29,11 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
 
     public static GameBoard gameBoard;
     /**
+     * This is a roundabout method of getting a GridPane to display a board of hexes.
+     * It involves having filler shapes to space out the hexes, and then the hexes which are resized to cover
+     * substantially more usual. Namely this resize makes the hex go out of it's defined grid box.
      * f - filler polygon. this shape buffers hexes between each other
-     * 0 - this polygon is an empty polygon that doesn't do anything
+     * 0 - this polygon is an empty polygon that doesn't do anything (slightly deprecated, might as well be f)
      * 1 - this polygon is a hex, which is then rendered
      */
     private final String[][] rowlist = new String[][]{
@@ -233,6 +236,14 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
         return gPane;
     }
 
+    /**
+     *
+     * @param x the x coordinate of the hex
+     * @param y the y coordinate of the hex
+     * @param width the width of the hex
+     * @param height the height of the hex
+     * @return a StackPane with the colored hex and corresponding text.
+     */
     public Node getHexPoly(int x, int y, double width, double height) {
         StackPane stackPane = new StackPane();
         Location location = new Location(x, y);
