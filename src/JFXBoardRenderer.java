@@ -237,7 +237,7 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
     }
 
     /**
-     *
+     * Generates a StackPane with the information of the hex with the given position.
      * @param x the x coordinate of the hex
      * @param y the y coordinate of the hex
      * @param width the width of the hex

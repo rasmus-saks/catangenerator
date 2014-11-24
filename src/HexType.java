@@ -3,10 +3,6 @@ import javafx.scene.paint.Paint;
 
 /**
  * An enum containing all the types of hexes there are.
- * These have the following information:
- * 1. the displayable acronym of the type (display)
- * 2. the full name of the type (name)
- * 3. the color of the type (color)
  */
 public enum HexType {
     WOOD("P", "Puit", Color.BROWN),

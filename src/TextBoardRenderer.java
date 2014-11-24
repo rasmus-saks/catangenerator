@@ -1,7 +1,7 @@
-@Deprecated
 /**
  * Legacy ascii renderer. No longer used.
  */
+@Deprecated
 public class TextBoardRenderer implements BoardRenderer {
     GameBoard hexes;
     @Override
