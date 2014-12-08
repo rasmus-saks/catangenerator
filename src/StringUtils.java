@@ -47,7 +47,7 @@ public class StringUtils {
     }
 
     /**
-     *
+     * Inserts spaces before a string in order to make it align with everything else
      * @param s the string that has to be padded from the front
      * @param width the total character width to be returned
      *              (has to always be more or equal to the length of s for desired effect)

@@ -12,6 +12,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -29,8 +30,11 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
 
     public static GameBoard gameBoard;
     /**
+     * This is a roundabout method of getting a GridPane to display a board of hexes.
+     * It involves having filler shapes to space out the hexes, and then the hexes which are resized to cover
+     * substantially more usual. Namely this resize makes the hex go out of it's defined grid box.
      * f - filler polygon. this shape buffers hexes between each other
-     * 0 - this polygon is an empty polygon that doesn't do anything
+     * 0 - this polygon is an empty polygon that doesn't do anything (slightly deprecated, might as well be f)
      * 1 - this polygon is a hex, which is then rendered
      */
     private final String[][] rowlist = new String[][]{
@@ -102,6 +106,12 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
         Label title = new Label("Katani generaator");
         title.setStyle("-fx-font-weight: bold; -fx-font-size: 18pt");
 
+        seedField.setOnKeyPressed(e -> {
+            if(e.getCode().equals(KeyCode.ENTER)) {
+                regenButton.fire();
+            }
+        });
+
         Button saveButton = new Button("Salvesta");
         saveButton.setOnAction(e -> {
             FileChooser chooser = new FileChooser();
@@ -151,9 +161,12 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
                 e1.printStackTrace();
             }
         });
+        Label errorLabel = new Label();
+        errorLabel.setTextFill(Color.RED);
         vbox.getChildren().addAll(
                 title,
-                new Label("Seeme"),
+                new HBox(new Label("Seeme "),
+                errorLabel),
                 seedField,
                 new Label("Sama seeme genereerib samasuguse mänguvälja"),
                 new Label("Jäta tühjaks, et genereerida suvaline mänguväli"),
@@ -171,11 +184,13 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
             if (seed.isEmpty()) {
                 CatanGenerator.regenerate(System.currentTimeMillis());
             } else {
-                long s = 0;
-                for (int i = 0; i < seed.length(); i++) {
-                    s += (int) seed.charAt(i);
+                try {
+                    long s = Long.parseLong(seedField.getText());
+                    CatanGenerator.regenerate(s);
+                    errorLabel.setText("");
+                } catch (NumberFormatException ex) {
+                    errorLabel.setText("Palun sisesta arv!");
                 }
-                CatanGenerator.regenerate(s);
             }
         });
         primaryStage.show();
@@ -223,6 +238,14 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
         return gPane;
     }
 
+    /**
+     * Generates a StackPane with the information of the hex with the given position.
+     * @param x the x coordinate of the hex
+     * @param y the y coordinate of the hex
+     * @param width the width of the hex
+     * @param height the height of the hex
+     * @return a StackPane with the colored hex and corresponding text.
+     */
     public Node getHexPoly(int x, int y, double width, double height) {
         StackPane stackPane = new StackPane();
         Location location = new Location(x, y);
