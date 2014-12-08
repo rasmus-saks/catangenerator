@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -74,6 +75,7 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
         primaryStage.setMinWidth(1000);
         primaryStage.setMinHeight(700);
 
+        primaryStage.getIcons().add(new Image(JFXBoardRenderer.class.getResourceAsStream("icon.png")));
         primaryStage.setWidth(primaryStage.getMinWidth());
         primaryStage.setHeight(primaryStage.getMinHeight());
 
