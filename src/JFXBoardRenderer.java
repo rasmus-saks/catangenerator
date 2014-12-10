@@ -211,8 +211,8 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
 
         int cx = 0;
         int cy = 0;
-        int width = 50;
-        int height = 45;
+        double width = 47.5;
+        double height = 42.75;
         for (String[] row : rowlist) {
             for (String element : row) {
                 Node poly;
@@ -240,6 +240,7 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
 
     /**
      * Generates a StackPane with the information of the hex with the given position.
+     * For more information on positioning see: {@link CatanGenerator#generateLocations()}
      * @param x the x coordinate of the hex
      * @param y the y coordinate of the hex
      * @param width the width of the hex
@@ -249,18 +250,18 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
     public Node getHexPoly(int x, int y, double width, double height) {
         StackPane stackPane = new StackPane();
         Location location = new Location(x, y);
-        Polygon polygon = new Polygon();
-        polygon.getPoints().addAll(
-                (3 / 13.0) * width, 0.0, //Left top
-                (10 / 13.0) * width, 0.0, //Right top
-                width, height / 2.0, //Right middle
-                (10 / 13.0) * width, height, //Right bottom
-                (3 / 13.0) * width, height, //Left bottom
-                0.0, height / 2.0); //Left middle
+        Polygon polygon = getPolygon(width, height);
+        Polygon borderpoly = getPolygon(width, height);
         Hex hex = HexUtils.getHexAt(gameBoard, location);
+
         polygon.setFill(hex.getType().getColor());
-        polygon.setScaleX(1.9);
-        polygon.setScaleY(1.9);
+        polygon.setScaleX(1.93);
+        polygon.setScaleY(1.93);
+
+        borderpoly.setFill(Color.DARKGRAY.darker().darker().darker());
+        borderpoly.setScaleX(2.13);
+        borderpoly.setScaleY(2.13);
+
         Text text = new Text(hex.getType().getName());
         if (hex.getNumber() != null)
             text.setText(text.getText() + "\n" + hex.getNumber().getValue());
@@ -271,8 +272,20 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
         text.setStyle("-fx-font-size: 15px; -fx-font-weight: bold");
         text.setTextAlignment(TextAlignment.CENTER);
 
-        stackPane.getChildren().addAll(polygon, text);
+        stackPane.getChildren().addAll(borderpoly,polygon, text);
         return stackPane;
+    }
+
+    private Polygon getPolygon(double width, double height) {
+        Polygon polygon = new Polygon();
+        polygon.getPoints().addAll(
+                (3 / 13.0) * width, 0.0, //Left top
+                (10 / 13.0) * width, 0.0, //Right top
+                width, height / 2.0, //Right middle
+                (10 / 13.0) * width, height, //Right bottom
+                (3 / 13.0) * width, height, //Left bottom
+                0.0, height / 2.0); //Left middle
+        return polygon;
     }
 
     public Node getEmptyPoly(double width, double height) {
