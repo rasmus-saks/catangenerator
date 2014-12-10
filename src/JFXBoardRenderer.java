@@ -32,7 +32,7 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
     /**
      * This is a roundabout method of getting a GridPane to display a board of hexes.
      * It involves having filler shapes to space out the hexes, and then the hexes which are resized to cover
-     * substantially more usual. Namely this resize makes the hex go out of it's defined grid box.
+     * substantially more than usual. Namely this resize makes the hex go out of it's defined grid box.
      * f - filler polygon. this shape buffers hexes between each other
      * 0 - this polygon is an empty polygon that doesn't do anything (slightly deprecated, might as well be f)
      * 1 - this polygon is a hex, which is then rendered
