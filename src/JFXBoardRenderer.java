@@ -161,7 +161,7 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
             }
         });
 
-        CheckBox showTextCB = new CheckBox("Näita tekste mänguruutudel");
+        CheckBox showTextCB = new CheckBox("Näita tekste mänguväljadel");
         showTextCB.setIndeterminate(false);
         showTextCB.setSelected(true);
         showTextCB.setOnAction(e -> {
