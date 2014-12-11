@@ -6,10 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
@@ -25,9 +22,11 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class JFXBoardRenderer extends Application implements BoardRenderer {
 
+    public static ArrayList<Text> hextexts = new ArrayList<Text>();
     public static GameBoard gameBoard;
     /**
      * This is a roundabout method of getting a GridPane to display a board of hexes.
@@ -97,8 +96,8 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
         VBox vbox = new VBox(5);
         vbox.setPadding(new Insets(5));
 
-        BorderPane leftPane = new BorderPane(vbox);
-        leftPane.setBottom(new Label("Rasmus Saks ja Al William Tammsaar 2014"));
+        BorderPane rightPane = new BorderPane(vbox);
+        rightPane.setBottom(new Label("Rasmus Saks ja Al William Tammsaar 2014"));
 
         TextField seedField = new TextField();
         Button regenButton = new Button("Genereeri");
@@ -161,6 +160,14 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
                 e1.printStackTrace();
             }
         });
+
+        CheckBox showTextCB = new CheckBox("Show text on hexes");
+        showTextCB.setIndeterminate(false);
+        showTextCB.setSelected(true);
+        showTextCB.setOnAction(e -> {
+            setTextDisplay(showTextCB.isSelected());
+        });
+
         Label errorLabel = new Label();
         errorLabel.setTextFill(Color.RED);
         vbox.getChildren().addAll(
@@ -176,11 +183,15 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
                 saveButton,
                 new Separator(),
                 new Label("Ekspordi/Impordi"),
-                new HBox(10, exportBtn, importBtn));
-        borderPane.setRight(leftPane);
+                new HBox(10, exportBtn, importBtn),
+                new Separator(),
+                showTextCB);
+        borderPane.setRight(rightPane);
 
         regenButton.setOnAction(e -> {
             String seed = seedField.getText();
+            showTextCB.setSelected(true);
+            hextexts.clear();
             if (seed.isEmpty()) {
                 CatanGenerator.regenerate(System.currentTimeMillis());
             } else {
@@ -198,7 +209,7 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
 
     public Pane getCenterPane() {
         Pane pane = new BorderPane(getGridPane());
-        pane.setStyle("-fx-background-color: lightblue");
+        pane.setStyle("-fx-background-color: #285e9b");
         return pane;
     }
 
@@ -271,6 +282,7 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
         //text.setStrokeType(StrokeType.OUTSIDE);
         text.setStyle("-fx-font-size: 15px; -fx-font-weight: bold");
         text.setTextAlignment(TextAlignment.CENTER);
+        hextexts.add(text);
 
         stackPane.getChildren().addAll(borderpoly,polygon, text);
         return stackPane;
@@ -295,5 +307,11 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
                 0.0, (5 / 12.0) * height);
         polygon.resize(0.1f, 0.1f);
         return polygon;
+    }
+
+    public void setTextDisplay(boolean shown){
+        for (Text text: hextexts){
+            text.setOpacity(shown ? 1.0 : 0.0);
+        }
     }
 }
