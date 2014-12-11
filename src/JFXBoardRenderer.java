@@ -161,7 +161,7 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
             }
         });
 
-        CheckBox showTextCB = new CheckBox("Show text on hexes");
+        CheckBox showTextCB = new CheckBox("Näita tekste mänguruutudel");
         showTextCB.setIndeterminate(false);
         showTextCB.setSelected(true);
         showTextCB.setOnAction(e -> {
