@@ -3,15 +3,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class Number extends Locatable implements Serializable{
+public class Number extends Locatable implements Serializable {
     private int value;
 
     public int getValue() {
         return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
     }
 
     public Number(Location loc, int value) {
@@ -31,6 +27,7 @@ public class Number extends Locatable implements Serializable{
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
     }
+
     private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
     }
@@ -42,9 +39,8 @@ public class Number extends Locatable implements Serializable{
 
         Number number = (Number) o;
 
-        if (value != number.value) return false;
+        return value == number.value;
 
-        return true;
     }
 
     @Override

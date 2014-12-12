@@ -126,13 +126,14 @@ public class CatanGenerator {
 
         Generator gen = new RandomGenerator(seed);
         gameBoard = gen.generateGameBoard();
-        if(renderer != null)
+        if (renderer != null)
             renderer.regenerated(gameBoard);
         return gameBoard;
     }
 
     /**
      * Saves the game board as a .ctn file.
+     *
      * @param file The file that will be saved
      * @throws IOException If the file writing is interrupted or if the writing its self is impossible for whatever reason, this exception is thrown.
      */
@@ -145,9 +146,10 @@ public class CatanGenerator {
 
     /**
      * Loads the game board from a .ctn file.
+     *
      * @param file the file to be loaded as a GameBoard class
      * @return return The gameBoard class, which was saved in the given file.
-     * @throws IOException Thrown in the situation where the file is unreadable or reading is interrupted for whatever reason.
+     * @throws IOException            Thrown in the situation where the file is unreadable or reading is interrupted for whatever reason.
      * @throws ClassNotFoundException Thrown when the input file does not contain the required class. (The input file was probably wrong)
      */
     public static GameBoard loadBoard(File file) throws IOException, ClassNotFoundException {

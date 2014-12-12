@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class JFXBoardRenderer extends Application implements BoardRenderer {
 
-    public static ArrayList<Text> hextexts = new ArrayList<Text>();
+    public static ArrayList<Text> hextexts = new ArrayList<>();
     public static GameBoard gameBoard;
     /**
      * This is a roundabout method of getting a GridPane to display a board of hexes.
@@ -106,7 +106,7 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
         title.setStyle("-fx-font-weight: bold; -fx-font-size: 18pt");
 
         seedField.setOnKeyPressed(e -> {
-            if(e.getCode().equals(KeyCode.ENTER)) {
+            if (e.getCode().equals(KeyCode.ENTER)) {
                 regenButton.fire();
             }
         });
@@ -164,16 +164,14 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
         CheckBox showTextCB = new CheckBox("Näita tekste mänguväljadel");
         showTextCB.setIndeterminate(false);
         showTextCB.setSelected(true);
-        showTextCB.setOnAction(e -> {
-            setTextDisplay(showTextCB.isSelected());
-        });
+        showTextCB.setOnAction(e -> setTextDisplay(showTextCB.isSelected()));
 
         Label errorLabel = new Label();
         errorLabel.setTextFill(Color.RED);
         vbox.getChildren().addAll(
                 title,
                 new HBox(new Label("Seeme "),
-                errorLabel),
+                        errorLabel),
                 seedField,
                 new Label("Sama seeme genereerib samasuguse mänguvälja"),
                 new Label("Jäta tühjaks, et genereerida suvaline mänguväli"),
@@ -217,9 +215,6 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
         GridPane gPane = new GridPane();
         gPane.setAlignment(Pos.CENTER);
 
-        /*gPane.scaleXProperty().bind(gPane.widthProperty().multiply(gPane.heightProperty()).divide(630 * 900));
-        gPane.scaleYProperty().bind(gPane.scaleXProperty());*/
-
         int cx = 0;
         int cy = 0;
         double width = 47.5;
@@ -252,9 +247,10 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
     /**
      * Generates a StackPane with the information of the hex with the given position.
      * For more information on positioning see: {@link CatanGenerator#generateLocations()}
-     * @param x the x coordinate of the hex
-     * @param y the y coordinate of the hex
-     * @param width the width of the hex
+     *
+     * @param x      the x coordinate of the hex
+     * @param y      the y coordinate of the hex
+     * @param width  the width of the hex
      * @param height the height of the hex
      * @return a StackPane with the colored hex and corresponding text.
      */
@@ -279,12 +275,11 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
         text.setFill(Color.WHITE);
         text.setStroke(Color.BLACK);
         text.setStrokeWidth(0.8);
-        //text.setStrokeType(StrokeType.OUTSIDE);
         text.setStyle("-fx-font-size: 15px; -fx-font-weight: bold");
         text.setTextAlignment(TextAlignment.CENTER);
         hextexts.add(text);
 
-        stackPane.getChildren().addAll(borderpoly,polygon, text);
+        stackPane.getChildren().addAll(borderpoly, polygon, text);
         return stackPane;
     }
 
@@ -309,8 +304,8 @@ public class JFXBoardRenderer extends Application implements BoardRenderer {
         return polygon;
     }
 
-    public void setTextDisplay(boolean shown){
-        for (Text text: hextexts){
+    public void setTextDisplay(boolean shown) {
+        for (Text text : hextexts) {
             text.setOpacity(shown ? 1.0 : 0.0);
         }
     }

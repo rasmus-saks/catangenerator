@@ -15,13 +15,11 @@ public class GameBoard implements Serializable {
         return hexes;
     }
 
-    public void setHexes(List<Hex> hexes) {
-        this.hexes = hexes;
-    }
 
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
     }
+
     private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
     }

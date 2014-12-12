@@ -22,9 +22,9 @@ public class RandomGenerator extends Generator {
         Collections.shuffle(CatanGenerator.LAND_LOCATIONS, random);
         Collections.shuffle(nums, random);
         int j = 0;
-        for(int i = 0; i < hexes.size(); i++) {
+        for (int i = 0; i < hexes.size(); i++) {
             hexes.get(i).setLoc(CatanGenerator.LAND_LOCATIONS.get(i));
-            if(hexes.get(i).getType() != HexType.DESERT) {
+            if (hexes.get(i).getType() != HexType.DESERT) {
                 hexes.get(i).setNumber(nums.get(j));
                 j++;
             }

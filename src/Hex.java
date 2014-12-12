@@ -1,7 +1,7 @@
 /**
  * Represents an element on a hex grid
  */
-public class Hex extends Locatable{
+public class Hex extends Locatable {
     private HexType type;
     private Number number;
 
@@ -13,9 +13,6 @@ public class Hex extends Locatable{
         return type;
     }
 
-    public void setType(HexType type) {
-        this.type = type;
-    }
 
     public Number getNumber() {
         return number;
@@ -23,10 +20,6 @@ public class Hex extends Locatable{
 
     public void setNumber(Number number) {
         this.number = number;
-    }
-
-    public Hex() {
-        this(null, null);
     }
 
     public Hex(Location loc, HexType type, Number number) {
@@ -51,10 +44,8 @@ public class Hex extends Locatable{
 
         Hex hex = (Hex) o;
 
-        if (number != null ? !number.equals(hex.number) : hex.number != null) return false;
-        if (type != hex.type) return false;
+        return !(number != null ? !number.equals(hex.number) : hex.number != null) && type == hex.type;
 
-        return true;
     }
 
     @Override

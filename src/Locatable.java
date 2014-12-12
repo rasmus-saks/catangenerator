@@ -24,6 +24,7 @@ public class Locatable implements Serializable {
 
     /**
      * Sets the location
+     *
      * @param loc The location
      */
     public void setLoc(Location loc) {
@@ -33,6 +34,7 @@ public class Locatable implements Serializable {
     private void writeObject(ObjectOutputStream stream) throws IOException {
         stream.defaultWriteObject();
     }
+
     private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
     }
